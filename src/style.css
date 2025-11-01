@@ -8,6 +8,7 @@ body {
     width: 90vw;
     height: 90vh;
     background: #002d00;
+    z-index: -2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +57,9 @@ body {
     border-color: #303030;
     border-style: solid;
     transform: perspective(15px) rotateX(-5deg);
+    z-index: 1;
 }
+
 
 .grave.flipped {
     flex-direction: column-reverse;
@@ -71,4 +74,41 @@ body {
     height: 70%;
     margin: 5% 5%;
     background-color: #424242;
+}
+.grave-hole {
+    background-color: #20180e;
+    position: absolute;
+    z-index: -1;
+    border: 5px inset #20180e;
+    height: 100%;
+}
+.grave-slab.open {
+    animation: 1s linear normal graveopen;
+    transform: perspective(150px) translate(110%, 0) translateZ(10px) rotateY(180deg)
+    
+}
+.grave-slab.closed {
+    animation: 1s linear normal graveclose;
+}
+@keyframes graveopen {
+    0% {
+        transform: perspective(150px) translate(0, 0) translateZ(0) rotateY(0deg);
+    }
+    40% {
+        transform: perspective(150px) translate(0, 0) translateZ(10px) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(150px) translate(110%, 0) translateZ(10px) rotateY(180deg)
+    }
+}
+@keyframes graveclose {
+    100% {
+        transform: perspective(150px) translate(0, 0) translateZ(0) rotateY(0deg);
+    }
+    60% {
+        transform: perspective(150px) translate(0, 0) translateZ(10px) rotateY(0deg);
+    }
+    0% {
+        transform: perspective(150px) translate(110%, 0) translateZ(10px) rotateY(180deg)
+    }
 }

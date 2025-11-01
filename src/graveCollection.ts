@@ -1,6 +1,11 @@
 
 export interface Grave {
-    elem: Element
+    elem: Element,
+    item?: Item
+}
+export interface Item {
+    name: string,
+    target: boolean
 }
 interface Elem {
     elem: Element,
@@ -8,7 +13,7 @@ interface Elem {
 }
 export function closeGrave(grave: Grave) {
     const slab = grave.elem.querySelector(".grave-slab")
-    slab?.classList.add("closed")
+    if (slab?.classList.contains("open")) slab?.classList.add("closed")
     slab?.classList.remove("open")
 }
 export function openGrave(grave: Grave) {

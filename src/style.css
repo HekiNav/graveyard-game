@@ -95,7 +95,7 @@ body {
 
 .grave-slab.open {
     animation: 1s cubic-bezier(0.075, 0.82, 0.165, 1) normal graveopen;
-    transform: perspective(150px) translate(110%, 0) translateZ(10px);
+    transform: perspective(150px) translate(105%, 0) translateZ(10px);
     z-index: 2;
 }
 
@@ -113,7 +113,7 @@ body {
     }
 
     100% {
-        transform: perspective(150px) translate(110%, 0) translateZ(10px)
+        transform: perspective(150px) translate(105%, 0) translateZ(10px)
     }
 }
 
@@ -130,6 +130,6 @@ body {
 
     0% {
         z-index: 2;
-        transform: perspective(150px) translate(110%, 0) translateZ(10px)
+        transform: perspective(150px) translate(105%, 0) translateZ(10px)
     }
 }

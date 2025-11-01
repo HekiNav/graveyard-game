@@ -1,7 +1,7 @@
 
 import { createGraves, openGrave, closeGrave } from "./graveCollection";
 
-const graveYard = document.querySelector("div#graveyard")
+const graveYard = document.querySelector("div#graveyard") as HTMLDivElement
 
 if (!graveYard) {
     throw new Error("Graveyard element not found")
@@ -30,16 +30,20 @@ graves.reduce((prev, curr) => {
 function onGraveClick(_event: MouseEvent, graveIndex: number) {
     const grave = graves[graveIndex]
     if (grave.elem.querySelector(".grave-slab")?.classList.contains("open")) return
-    openGrave(grave)
+    if (openGraves.length >= 2) return
+    openGrave(grave, grave.item)
     openGraves.push(graveIndex)
 
 
     if (openGraves.length >= 2) {
         grave.elem.querySelector(".grave-slab")?.addEventListener("animationend", () => {
-            console.log(openGraves.map(i => graves[i].item))
-            openGraves = []
-            graves.map(closeGrave)
-        }, {once: true})
+            setTimeout(() => {
+                console.log(openGraves.map(i => graves[i].item))
+                openGraves = []
+                graves.map(closeGrave)
+            }, 500)
+
+        }, { once: true })
 
     }
 }

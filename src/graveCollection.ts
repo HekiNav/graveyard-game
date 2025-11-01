@@ -16,11 +16,14 @@ export function closeGrave(grave: Grave) {
     if (slab?.classList.contains("open")) slab?.classList.add("closed")
     slab?.classList.remove("open")
 }
-export function openGrave(grave: Grave) {
+export function openGrave(grave: Grave, item?: Item) {
     const slab = grave.elem.querySelector(".grave-slab")
-
     slab?.classList.remove("closed")
     slab?.classList.add("open")
+    if (item) {
+        const hole = grave.elem.querySelector(".grave-hole")
+        hole?.setAttribute("data-content", item.name)
+    }
 }
 
 

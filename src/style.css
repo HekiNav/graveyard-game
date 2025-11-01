@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    overflow: hidden;
 }
 
 #container {
@@ -86,6 +87,9 @@ body {
     bottom: 3%;
     left: 5%;
     right: 5%;
+}
+.grave-hole::before {
+    content: attr(data-content);
 }
 
 .grave.flipped .grave-hole {

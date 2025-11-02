@@ -23,6 +23,13 @@ const objects = [
     "3",
 ]
 
+const backgroundAudio = new Audio("/background.mp3")
+document.addEventListener("click", () => {
+    backgroundAudio.loop = true
+    backgroundAudio.play()
+
+})
+
 let graves = createGraves(6, 4, graveYard, onGraveClick)
 
 
@@ -45,12 +52,32 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 
     if (grave.item.name == "evil") {
         const newItems = shuffle(graves.filter(g => g.item).map(g => g.item))
-        graves.filter(g => g.item).forEach((g,i) => {
+        graves.filter(g => g.item).forEach((g, i) => {
             g.item = newItems[i]
         })
-        openGraves = []
-        graves.map(closeGrave)
-        graves.map(updateGrave)
+        const jumpscareAudio = new Audio("/jumpscare.wav")
+        jumpscareAudio.addEventListener("loadeddata", () => {
+            console.log("loaded audio")
+        })
+
+        grave.elem.addEventListener("animationend", () => {
+            document.getElementById("jumpscare")?.classList.remove("hidden")
+
+            jumpscareAudio.addEventListener("ended", () => {
+                openGraves = []
+                graves.map(closeGrave)
+                document.getElementById("jumpscare")?.classList.add("hidden")
+
+                grave.elem.addEventListener("animationend", () => {
+                    graves.map(updateGrave)
+                }, { once: true })
+            })
+            jumpscareAudio.play()
+
+        }, { once: true })
+
+
+
         return
     }
 

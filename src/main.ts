@@ -10,15 +10,18 @@ if (!graveYard) {
 let openGraves: Array<number> = []
 
 const objects = [
-    "url(/objects/atom.svg)",
-    "url(/objects/flash.svg)",
-    "url(/objects/algol.png)",
-    "url(/objects/hypercard.png)",
-    "url(/objects/objectivec.svg)",
-    "url(/objects/angularjs.png)"
+    "atom.svg",
+    "flash.svg",
+    "algol.png",
+    "hypercard.png",
+    "objectivec.svg",
+    "angularjs.png",
+    "silverlight.png"
 ]
 
 const graves = createGraves(4, graveYard, onGraveClick)
+
+
 graves.reduce((prev, curr) => {
     const item = prev.splice(Math.floor(Math.random() * prev.length), 1)[0]
     curr.item = item
@@ -29,11 +32,11 @@ graves.forEach(g => updateGrave(g))
 
 function onGraveClick(_event: MouseEvent, graveIndex: number) {
     const grave = graves[graveIndex]
+    if (!grave.item) return
     if (grave.elem.querySelector(".grave-slab")?.classList.contains("open")) return
     if (openGraves.length >= 2) return
     openGrave(grave)
     openGraves.push(graveIndex)
-
 
     if (openGraves.length >= 2) {
         grave.elem.querySelector(".grave-slab")?.addEventListener("animationend", () => {
@@ -44,13 +47,47 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
                 const moving = open.find(g => g.item?.target == false)
                 const target = open.find(g => g.item?.target == true)
 
-                const rects = [target?.elem.getBoundingClientRect(), moving?.elem.getBoundingClientRect()]
+                if (!moving || !target) return
+
+                const rects = [target?.elem.querySelector(".grave-hole")?.getBoundingClientRect(), moving?.elem.querySelector(".grave-hole")?.getBoundingClientRect()]
 
                 const xyOffset = { x: (rects[0]?.x || 0) - (rects[1]?.x || 0), y: (rects[0]?.y || 0) - (rects[1]?.y || 0) }
 
-                
+                const animatedDiv = document.createElement("div")
+                const img = document.createElement("img")
+                img.src = open[0].item?.name || ""
+                img.alt = open[0].item?.name || "none"
+                img.style.width = ((rects[0]?.width || 0) * 0.9 + "px") || "0"
 
-                //graves.map(closeGrave)
+                animatedDiv.append(img)
+
+                animatedDiv.classList.add("animated-container")
+                animatedDiv.style.top = rects[1]?.top + "px"
+                animatedDiv.style.left = rects[1]?.left + "px"
+                animatedDiv.style.height = rects[1]?.height + "px"
+                animatedDiv.style.width = rects[1]?.width + "px"
+
+                document.body.append(animatedDiv)
+                moving.elem.classList.add("empty")
+
+                animatedDiv.addEventListener("transitionend", () => {
+                    animatedDiv.remove()
+                    target.elem.classList.add("complete")
+                    graves.map(closeGrave)
+                    openGraves = []
+                    target.elem.addEventListener("animationend", ()  => {
+                        target.elem.classList.add("hidden")
+                        moving.elem.classList.add("hidden")
+                        target.item = undefined
+                        moving.item = undefined
+                        checkWin()
+                    })
+                }, { once: true })
+
+                setTimeout(() => {
+                    animatedDiv.style.transform = `translate(${xyOffset.x}px, ${xyOffset.y}px)`
+                }, 100)
+
                 openGraves = []
             } else {
                 setTimeout(() => {
@@ -64,6 +101,10 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
         }, { once: true })
 
     }
+}
+function checkWin() {
+    if (!graves.every(g => !g.item)) return
+    console.log("YOU WIN")
 }
 
 function shuffle(arr: Array<any>) {

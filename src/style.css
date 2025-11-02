@@ -43,6 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: 1s linear;
 }
 
 .path {
@@ -65,6 +66,9 @@ body {
 
 .grave.flipped {
     flex-direction: column-reverse;
+}
+.grave.hidden {
+    opacity: 0;
 }
 
 .grave.flipped .grave-stone {
@@ -106,6 +110,12 @@ body {
     top: 3%;
     bottom: 25%;
 }
+.grave.empty .grave-hole::before {
+    display: none;
+}
+.grave.complete .grave-hole::before {
+    filter: grayscale(0.5);
+}
 
 .grave-slab.open {
     animation: 1s cubic-bezier(0.075, 0.82, 0.165, 1) normal graveopen;
@@ -146,4 +156,15 @@ body {
         z-index: 2;
         transform: perspective(150px) translate(105%, 0) translateZ(10px)
     }
+}
+
+.animated-container {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 1s ease-in-out;
+    transform: translate(0,0);
+    filter: grayscale(0.5);
 }

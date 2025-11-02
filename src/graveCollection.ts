@@ -26,7 +26,7 @@ export function updateGrave(grave: Grave) {
     const item = grave.item!
     const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
     hole?.setAttribute("data-target", item.target ? "yes" : "no")
-    hole?.style.setProperty("--content", /url\(.*\)/.test(item.name) ? item.name : `"${item.name}"`)
+    hole?.style.setProperty("--content", `url(/objects/${item.name})`)
 }
 
 

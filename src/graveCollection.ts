@@ -16,14 +16,17 @@ export function closeGrave(grave: Grave) {
     if (slab?.classList.contains("open")) slab?.classList.add("closed")
     slab?.classList.remove("open")
 }
-export function openGrave(grave: Grave, item?: Item) {
+export function openGrave(grave: Grave) {
     const slab = grave.elem.querySelector(".grave-slab")
     slab?.classList.remove("closed")
     slab?.classList.add("open")
-    if (item) {
-        const hole = grave.elem.querySelector(".grave-hole")
-        hole?.setAttribute("data-content", item.name)
-    }
+
+}
+export function updateGrave(grave: Grave) {
+    const item = grave.item!
+    const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
+    hole?.setAttribute("data-target", item.target ? "yes" : "no")
+    hole?.style.setProperty("--content", /url\(.*\)/.test(item.name) ? item.name : `"${item.name}"`)
 }
 
 
@@ -35,7 +38,7 @@ export function createGraves(width: number, graveYard: HTMLDivElement, onGraveCl
 
             const flipped = i % 3 == 2
 
-            const elem = i % 3 == 1 ? j == 0 ? pathElement(graveYard) : null : graveElement(graveYard, flipped, onGraveClick, (i - Math.floor((i+1) / 3)) * width + j)
+            const elem = i % 3 == 1 ? j == 0 ? pathElement(graveYard) : null : graveElement(graveYard, flipped, onGraveClick, (i - Math.floor((i + 1) / 3)) * width + j)
             if (elem && elem.type == "grave") graves.push({
                 elem: elem.elem
             })

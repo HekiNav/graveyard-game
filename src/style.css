@@ -89,7 +89,17 @@ body {
     right: 5%;
 }
 .grave-hole::before {
-    content: attr(data-content);
+    position: absolute;
+    content: "";
+    background: var(--content) 0/100% no-repeat;
+    display: block;
+    width: 90%;
+    margin: 0 5%;
+    height: 100%;
+    filter: grayscale(0.5);
+}
+.grave-hole[data-target="yes"]::before {
+    filter: grayscale(1) opacity(0.5);
 }
 
 .grave.flipped .grave-hole {

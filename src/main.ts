@@ -18,12 +18,12 @@ const objects = [
     "angularjs.png",
     "silverlight.png",
     "windows-mobile.webp",
-    "",
-    "",
-    "",
+    "1",
+    "2",
+    "3",
 ]
 
-const graves = createGraves(6, 4, graveYard, onGraveClick)
+let graves = createGraves(6, 4, graveYard, onGraveClick)
 
 
 graves.reduce((prev, curr) => {
@@ -39,8 +39,20 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
     if (!grave.item) return
     if (grave.elem.querySelector(".grave-slab")?.classList.contains("open")) return
     if (openGraves.length >= 2) return
+
     openGrave(grave)
     openGraves.push(graveIndex)
+
+    if (grave.item.name == "evil") {
+        const newItems = shuffle(graves.filter(g => g.item).map(g => g.item))
+        graves.filter(g => g.item).forEach((g,i) => {
+            g.item = newItems[i]
+        })
+        openGraves = []
+        graves.map(closeGrave)
+        graves.map(updateGrave)
+        return
+    }
 
     if (openGraves.length >= 2) {
         grave.elem.querySelector(".grave-slab")?.addEventListener("animationend", () => {

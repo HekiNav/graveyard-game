@@ -1,0 +1,56 @@
+#jumpscare {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+    background-color: white;
+    animation: 100ms infinite both strobe;
+}
+#jumpscare.hidden {
+
+    display: none;
+
+}
+
+@keyframes strobe {
+    from, 49% {
+        filter:  invert() hue-rotate(180deg);
+    }
+    to, 50%{
+        filter: none;
+    }
+}
+
+#chatgpt {
+    width: 20%;
+    aspect-ratio: 1/1;
+    background: center/contain no-repeat url(/objects/chatgpt.png);
+}
+
+#chatgpt:after,
+#chatgpt:before {
+    content: "";
+    height: 5%;
+    width: 5%;
+    border-radius: 50%;
+    background-color: red;
+    --size: 3vh;
+    box-shadow: 0 0 var(--size) var(--size) red;
+    display: block;
+    position: relative;
+    top: 20%;
+}
+
+#chatgpt:before {
+    left: 30%;
+}
+
+#chatgpt::after {
+    top: 15%;
+    left: 75%;
+}

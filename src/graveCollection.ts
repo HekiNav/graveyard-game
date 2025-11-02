@@ -25,15 +25,15 @@ export function openGrave(grave: Grave) {
 export function updateGrave(grave: Grave) {
     const item = grave.item!
     const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
+    if (item.name == "evil") hole.style.background = "red"
     hole?.setAttribute("data-target", item.target ? "yes" : "no")
     hole?.style.setProperty("--content", `url(/objects/${item.name})`)
 }
 
 
-export function createGraves(width: number, graveYard: HTMLDivElement, onGraveClick: Function): Array<Grave> {
+export function createGraves(width: number, height: number, graveYard: HTMLDivElement, onGraveClick: Function): Array<Grave> {
     const graves = new Array<Grave>()
-    // height is half of width
-    for (let i = 0; i < width * 2 / 3; i++) {
+    for (let i = 0; i < height * 1.5; i++) {
         for (let j = 0; j < width; j++) {
 
             const flipped = i % 3 == 2

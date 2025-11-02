@@ -16,17 +16,21 @@ const objects = [
     "hypercard.png",
     "objectivec.svg",
     "angularjs.png",
-    "silverlight.png"
+    "silverlight.png",
+    "windows-mobile.webp",
+    "",
+    "",
+    "",
 ]
 
-const graves = createGraves(4, graveYard, onGraveClick)
+const graves = createGraves(6, 4, graveYard, onGraveClick)
 
 
 graves.reduce((prev, curr) => {
     const item = prev.splice(Math.floor(Math.random() * prev.length), 1)[0]
     curr.item = item
     return prev
-}, shuffle(objects).slice(0, graves.length / 2).flatMap(o => [{ name: o, target: true }, { name: o, target: false }]))
+}, [...shuffle(objects).slice(0, graves.length / 2 - 1), "evil"].flatMap(o => [{ name: o, target: true }, { name: o, target: false }]))
 
 graves.forEach(g => updateGrave(g))
 
@@ -55,7 +59,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 
                 const animatedDiv = document.createElement("div")
                 const img = document.createElement("img")
-                img.src = open[0].item?.name || ""
+                img.src = "/objects/" + open[0].item?.name
                 img.alt = open[0].item?.name || "none"
                 img.style.width = ((rects[0]?.width || 0) * 0.9 + "px") || "0"
 
@@ -75,7 +79,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
                     target.elem.classList.add("complete")
                     graves.map(closeGrave)
                     openGraves = []
-                    target.elem.addEventListener("animationend", ()  => {
+                    target.elem.addEventListener("animationend", () => {
                         target.elem.classList.add("hidden")
                         moving.elem.classList.add("hidden")
                         target.item = undefined

@@ -1,7 +1,7 @@
 
 import { createGraves, openGrave, closeGrave, updateGrave } from "./graveCollection";
 
-const base = import.meta.env.BASE_URL || ""
+const base = import.meta.env.BASE_URL
 
 const graveYard = document.querySelector("div#graveyard") as HTMLDivElement
 
@@ -24,8 +24,8 @@ const objects = [
     "2",
     "3",
 ]
-
-const backgroundAudio = new Audio(base+"/background.mp3")
+console.log(base + "background.mp3")
+const backgroundAudio = new Audio(base + "background.mp3")
 document.addEventListener("click", () => {
     backgroundAudio.loop = true
     backgroundAudio.play()
@@ -57,7 +57,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
         graves.filter(g => g.item).forEach((g, i) => {
             g.item = newItems[i]
         })
-        const jumpscareAudio = new Audio(base+"/jumpscare.wav")
+        const jumpscareAudio = new Audio(base + "jumpscare.wav")
         jumpscareAudio.addEventListener("loadeddata", () => {
             console.log("loaded audio")
         })
@@ -100,7 +100,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 
                 const animatedDiv = document.createElement("div")
                 const img = document.createElement("img")
-                img.src = base+"/objects/" + open[0].item?.name
+                img.src = base + "/objects/" + open[0].item?.name
                 img.alt = open[0].item?.name || "none"
                 img.style.width = ((rects[0]?.width || 0) * 0.9 + "px") || "0"
 

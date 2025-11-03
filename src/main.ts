@@ -156,6 +156,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 function checkWin() {
     if (!graves.every(g => !g.item || !g.item.name)) return
     console.log("YOU WIN")
+    alert("YOU WIN")
 }
 
 function shuffle(arr: Array<any>) {

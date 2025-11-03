@@ -24,7 +24,6 @@ const objects = [
     "",
     "",
 ]
-console.log(base + "background.mp3")
 const backgroundAudio = new Audio(base + "background.mp3")
 document.addEventListener("click", () => {
     backgroundAudio.loop = true
@@ -56,29 +55,28 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
         grave.elem.classList.add("hidden")
         const newItems = shuffle(graves.filter(g => g.item).map(g => g.item))
         graves.filter(g => g.item).forEach((g, i) => {
-            console.log(g.item, newItems[i])
             g.item = newItems[i]
         })
         const jumpscareAudio = new Audio(base + "jumpscare.wav")
         jumpscareAudio.addEventListener("loadeddata", () => {
-            console.log("loaded audio")
+            grave.elem.addEventListener("animationend", () => {
+                document.getElementById("jumpscare")?.classList.remove("hidden")
+
+                jumpscareAudio.addEventListener("ended", () => {
+                    openGraves = []
+                    graves.map(closeGrave)
+                    document.getElementById("jumpscare")?.classList.add("hidden")
+
+                    grave.elem.addEventListener("animationend", () => {
+                        graves.map(updateGrave)
+                    }, { once: true })
+                })
+                jumpscareAudio.play()
+
+            }, { once: true })
         })
 
-        grave.elem.addEventListener("animationend", () => {
-            document.getElementById("jumpscare")?.classList.remove("hidden")
 
-            jumpscareAudio.addEventListener("ended", () => {
-                openGraves = []
-                graves.map(closeGrave)
-                document.getElementById("jumpscare")?.classList.add("hidden")
-
-                grave.elem.addEventListener("animationend", () => {
-                    graves.map(updateGrave)
-                }, { once: true })
-            })
-            jumpscareAudio.play()
-
-        }, { once: true })
 
 
 
@@ -89,7 +87,6 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
         grave.elem.querySelector(".grave-slab")?.addEventListener("animationend", () => {
             const open = openGraves.map(i => graves[i])
             if (open[0].item?.name == open[1].item?.name) {
-                console.log("MATCH")
 
                 const moving = open.find(g => g.item?.target == false && g.item.name)
                 const target = open.find(g => g.item?.target == true && g.item.name)
@@ -142,7 +139,6 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
                 openGraves = []
             } else {
                 setTimeout(() => {
-                    console.log(openGraves.map(i => graves[i].item))
                     openGraves = []
                     graves.map(closeGrave)
                 }, 500)
@@ -155,7 +151,6 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 }
 function checkWin() {
     if (!graves.every(g => !g.item || !g.item.name)) return
-    console.log("YOU WIN")
     alert("YOU WIN")
 }
 

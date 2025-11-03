@@ -30,7 +30,6 @@ export function updateGrave(grave: Grave) {
         hole.style.setProperty("--content", `url(${base}objects/chatgpt.png)`)
         return
     }
-    console.log(hole, item)
 
     hole.setAttribute("data-target", item.target ? "yes" : "no")
     hole.style.setProperty("--content", `url(${base}objects/${item.name})`)

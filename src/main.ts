@@ -20,16 +20,15 @@ const objects = [
     "angularjs.png",
     "silverlight.png",
     "windows-mobile.webp",
-    "1",
-    "2",
-    "3",
+    "",
+    "",
+    "",
 ]
 console.log(base + "background.mp3")
 const backgroundAudio = new Audio(base + "background.mp3")
 document.addEventListener("click", () => {
     backgroundAudio.loop = true
     backgroundAudio.play()
-
 })
 
 let graves = createGraves(6, 4, graveYard, onGraveClick)
@@ -53,8 +52,11 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
     openGraves.push(graveIndex)
 
     if (grave.item.name == "evil") {
+        grave.item = undefined
+        grave.elem.classList.add("hidden")
         const newItems = shuffle(graves.filter(g => g.item).map(g => g.item))
         graves.filter(g => g.item).forEach((g, i) => {
+            console.log(g.item, newItems[i])
             g.item = newItems[i]
         })
         const jumpscareAudio = new Audio(base + "jumpscare.wav")
@@ -89,10 +91,14 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
             if (open[0].item?.name == open[1].item?.name) {
                 console.log("MATCH")
 
-                const moving = open.find(g => g.item?.target == false)
-                const target = open.find(g => g.item?.target == true)
+                const moving = open.find(g => g.item?.target == false && g.item.name)
+                const target = open.find(g => g.item?.target == true && g.item.name)
 
-                if (!moving || !target) return
+                if (!moving || !target) {
+                    openGraves = []
+                    graves.map(closeGrave)
+                    return
+                }
 
                 const rects = [target?.elem.querySelector(".grave-hole")?.getBoundingClientRect(), moving?.elem.querySelector(".grave-hole")?.getBoundingClientRect()]
 
@@ -100,7 +106,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
 
                 const animatedDiv = document.createElement("div")
                 const img = document.createElement("img")
-                img.src = base + "/objects/" + open[0].item?.name
+                img.src = base + "objects/" + open[0].item?.name
                 img.alt = open[0].item?.name || "none"
                 img.style.width = ((rects[0]?.width || 0) * 0.9 + "px") || "0"
 
@@ -148,7 +154,7 @@ function onGraveClick(_event: MouseEvent, graveIndex: number) {
     }
 }
 function checkWin() {
-    if (!graves.every(g => !g.item)) return
+    if (!graves.every(g => !g.item || !g.item.name)) return
     console.log("YOU WIN")
 }
 

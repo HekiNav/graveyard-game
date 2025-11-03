@@ -16,3 +16,8 @@ body {
     transform: translate(0,0);
     filter: grayscale(0.5);
 }
+
+
+.animated-container.a {
+    display: contents;
+}

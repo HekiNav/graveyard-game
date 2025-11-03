@@ -24,14 +24,13 @@ export function openGrave(grave: Grave) {
 }
 export function updateGrave(grave: Grave) {
     const item = grave.item!
+    if (!item) return
     const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
     if (item.name == "evil") {
-        hole.style.border = "1px solid red"
         hole.style.setProperty("--content", `url(${base}objects/chatgpt.png)`)
         return
     }
     console.log(hole, item)
-    hole.style.border = "none"
 
     hole.setAttribute("data-target", item.target ? "yes" : "no")
     hole.style.setProperty("--content", `url(${base}objects/${item.name})`)
@@ -51,7 +50,8 @@ export function createGraves(width: number, height: number, graveYard: HTMLDivEl
             })
         }
     }
-    graveYard.style.setProperty("--size", width.toString())
+    graveYard.style.setProperty("--width", width.toString())
+    graveYard.style.setProperty("--height", width.toString())
 
     return graves
 }

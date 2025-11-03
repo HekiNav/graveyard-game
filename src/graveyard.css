@@ -2,7 +2,7 @@
 #container {
     width: 90vw;
     height: 90vh;
-    background: #002d00 0/100% url(./black-felt.png);
+    background: #002d00 0/100% url(/black-felt.png);
     z-index: -2;
     display: flex;
     align-items: center;
@@ -42,14 +42,14 @@
 
 .path {
     grid-column: 1 / calc(var(--size) + 1);
-    background: #342b19 20%/20% url(./white-sand.png) ;
+    background: #342b19 20%/20% url(/white-sand.png) ;
 }
 
 .grave-stone {
     height: 20%;
     margin: 0 5%;
     border-radius: 50% 50% 0 0;
-    background: #2c2c2c calc(1.5% * var(--random)) calc(1.5% * var(--random))/150% url(./rocky-wall.png);
+    background: #2c2c2c calc(1.5% * var(--random)) calc(1.5% * var(--random))/150% url(/rocky-wall.png);
     border-width: 5px 0 0 0;
     border-color: #303030;
     border-style: solid;
@@ -73,12 +73,12 @@
     border: 5px #424242 ridge;
     height: 70%;
     margin: 5% 5%;
-    background: #3d3d3d calc(15% * var(--random)) calc(15% * var(--random))/150% url(./rocky-wall.png);
+    background: #3d3d3d calc(15% * var(--random)) calc(15% * var(--random))/150% url(/rocky-wall.png);
     z-index: 1;
 }
 
 .grave-hole {
-    background: #261803 0/100% url(./wood.png);
+    background: #261803 0/100% url(/wood.png);
     position: absolute;
     z-index: 0;
     top: 25%;

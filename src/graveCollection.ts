@@ -1,4 +1,4 @@
-
+const base = import.meta.env.BASE_URL || ""
 export interface Grave {
     elem: Element,
     item?: Item
@@ -27,14 +27,14 @@ export function updateGrave(grave: Grave) {
     const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
     if (item.name == "evil") {
         hole.style.border = "1px solid red"
-        hole.style.setProperty("--content", `url(./objects/chatgpt.png)`)
+        hole.style.setProperty("--content", `url(${base}/objects/chatgpt.png)`)
         return
     }
     console.log(hole, item)
     hole.style.border = "none"
 
     hole.setAttribute("data-target", item.target ? "yes" : "no")
-    hole.style.setProperty("--content", `url(./objects/${item.name})`)
+    hole.style.setProperty("--content", `url(${base}/objects/${item.name})`)
 }
 
 

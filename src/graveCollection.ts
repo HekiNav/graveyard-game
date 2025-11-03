@@ -27,7 +27,7 @@ export function updateGrave(grave: Grave) {
     const hole = grave.elem.querySelector(".grave-hole") as HTMLDivElement
     if (item.name == "evil") {
         hole.style.border = "1px solid red"
-        hole.style.setProperty("--content", `url(/objects/chatgpt.png)`)
+        hole.style.setProperty("--content", `url(./objects/chatgpt.png)`)
         return
     }
     console.log(hole, item)

@@ -29,7 +29,7 @@
 #chatgpt {
     width: 20%;
     aspect-ratio: 1/1;
-    background: center/contain no-repeat url(/objects/chatgpt.png);
+    background: center/contain no-repeat url(./objects/chatgpt.png);
 }
 
 #chatgpt:after,

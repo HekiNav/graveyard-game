@@ -34,7 +34,7 @@ export function updateGrave(grave: Grave) {
     hole.style.border = "none"
 
     hole.setAttribute("data-target", item.target ? "yes" : "no")
-    hole.style.setProperty("--content", `url(/objects/${item.name})`)
+    hole.style.setProperty("--content", `url(./objects/${item.name})`)
 }
 
 
